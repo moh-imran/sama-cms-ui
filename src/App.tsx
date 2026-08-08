@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { CustomerPortal } from './components/CustomerPortal';
 import { BankAgentPortal } from './components/BankAgentPortal';
 import { SamaGatewayPortal } from './components/SamaGatewayPortal';
 import { SlaConfigModal } from './components/SlaConfigModal';
 import { RulesGuideModal } from './components/RulesGuideModal';
+import { ArchitectureSlider } from './components/ArchitectureSlider';
 import { Ticket, TicketComment, TriageAuditLog } from './types';
-import { Building2, User, ShieldCheck, RefreshCw, AlertTriangle, Sparkles, BookOpen } from 'lucide-react';
+import { Building2, User, ShieldCheck, RefreshCw, AlertTriangle, Sparkles, BookOpen, Layers } from 'lucide-react';
 
 export const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'customer' | 'bank_agent' | 'sama_gateway'>('customer');
@@ -16,7 +17,20 @@ export const App: React.FC = () => {
   const [auditLogs, setAuditLogs] = useState<TriageAuditLog[]>([]);
   const [isSlaConfigOpen, setIsSlaConfigOpen] = useState(false);
   const [isRulesGuideOpen, setIsRulesGuideOpen] = useState(false);
+  const [isArchSliderOpen, setIsArchSliderOpen] = useState(true);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // ESC key to close architecture slider
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Escape' && isArchSliderOpen) {
+      setIsArchSliderOpen(false);
+    }
+  }, [isArchSliderOpen]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [handleKeyDown]);
 
   const fetchTickets = async () => {
     try {
@@ -244,6 +258,14 @@ export const App: React.FC = () => {
               <BookOpen className="w-4 h-4 text-amber-400" />
               <span>Escalation Rules Guide</span>
             </button>
+
+            <button
+              onClick={() => setIsArchSliderOpen(true)}
+              className="px-3.5 py-2 rounded-xl text-xs font-bold bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 border border-sky-500/30 transition-all flex items-center space-x-1.5"
+            >
+              <Layers className="w-4 h-4 text-sky-400" />
+              <span>Architecture</span>
+            </button>
           </nav>
         </div>
       </header>
@@ -300,6 +322,12 @@ export const App: React.FC = () => {
       <RulesGuideModal
         isOpen={isRulesGuideOpen}
         onClose={() => setIsRulesGuideOpen(false)}
+      />
+
+      {/* Architecture Comparison Slider */}
+      <ArchitectureSlider
+        isOpen={isArchSliderOpen}
+        onClose={() => setIsArchSliderOpen(false)}
       />
 
       {/* Footer */}
