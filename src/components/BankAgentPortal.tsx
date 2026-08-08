@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { 
   ShieldCheck, AlertOctagon, Clock, UserCheck, ArrowUpRight, 
-  Check, FileText, Activity, Settings, RefreshCw, AlertTriangle
+  Check, FileText, Activity, Settings, RefreshCw, AlertTriangle, Trash2
 } from 'lucide-react';
 import { Ticket, TicketComment, TriageAuditLog } from '../types';
 
@@ -16,6 +16,7 @@ interface Props {
   onSyncSama: (ticketId: string) => void;
   onCheckSLAs: () => void;
   onOpenSlaConfig: () => void;
+  onDeleteTicket?: (ticketId: string) => void;
 }
 
 export const BankAgentPortal: React.FC<Props> = ({
@@ -28,7 +29,8 @@ export const BankAgentPortal: React.FC<Props> = ({
   onEscalate,
   onSyncSama,
   onCheckSLAs,
-  onOpenSlaConfig
+  onOpenSlaConfig,
+  onDeleteTicket
 }) => {
   const [levelFilter, setLevelFilter] = useState<'All' | 'L1' | 'L2' | 'SAMA'>('L1');
   const [agentResponse, setAgentResponse] = useState('');
@@ -269,10 +271,24 @@ export const BankAgentPortal: React.FC<Props> = ({
 
                   <button
                     onClick={() => onSyncSama(selectedTicket.ticket_id)}
-                    className="bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-500/40 text-xs font-semibold px-3 py-2 rounded-xl transition-all"
+                    className="bg-purple-950/60 hover:bg-purple-900/80 text-purple-300 border border-purple-500/40 text-xs font-semibold px-3 py-2 rounded-xl transition-all"
                   >
                     Escalate & Sync to CRA Gateway (Mock)
                   </button>
+
+                  {onDeleteTicket && (
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Are you sure you want to delete ticket ${selectedTicket.ticket_id}?`)) {
+                          onDeleteTicket(selectedTicket.ticket_id);
+                        }
+                      }}
+                      className="bg-rose-950/80 hover:bg-rose-900 text-rose-300 border border-rose-500/50 text-xs font-semibold px-3 py-2 rounded-xl transition-all flex items-center space-x-1.5 shadow"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete Ticket</span>
+                    </button>
+                  )}
                 </div>
 
                 {/* Response Input */}

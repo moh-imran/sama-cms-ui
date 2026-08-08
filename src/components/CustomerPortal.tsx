@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, AlertTriangle, CheckCircle, Clock, ShieldAlert, Sparkles, MessageSquare } from 'lucide-react';
+import { Send, AlertTriangle, CheckCircle, Clock, ShieldAlert, Sparkles, MessageSquare, Trash2 } from 'lucide-react';
 import { Ticket, TicketComment } from '../types';
 
 interface Props {
@@ -9,6 +9,7 @@ interface Props {
   selectedTicket: Ticket | null;
   comments: TicketComment[];
   onPostReply: (ticketId: string, role: string, name: string, content: string) => void;
+  onDeleteTicket?: (ticketId: string) => void;
 }
 
 export const CustomerPortal: React.FC<Props> = ({
@@ -17,7 +18,8 @@ export const CustomerPortal: React.FC<Props> = ({
   onSelectTicket,
   selectedTicket,
   comments,
-  onPostReply
+  onPostReply,
+  onDeleteTicket
 }) => {
   const [customerName, setCustomerName] = useState('Tariq Al-Mansoor');
   const [channel, setChannel] = useState('Mobile App');
@@ -222,14 +224,30 @@ export const CustomerPortal: React.FC<Props> = ({
                   <span className="font-mono text-xs font-bold text-emerald-400">{selectedTicket.ticket_id}</span>
                   <h3 className="text-lg font-bold text-white">{selectedTicket.subject}</h3>
                 </div>
-                <div className="text-right">
-                  <span className="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">
-                    Status: {selectedTicket.status}
-                  </span>
-                  {selectedTicket.sama_reference_id && (
-                    <div className="text-xs text-emerald-400 font-mono mt-1">
-                      CRA Ref: {selectedTicket.sama_reference_id}
-                    </div>
+                <div className="flex items-center space-x-3">
+                  <div className="text-right">
+                    <span className="text-xs bg-slate-800 text-slate-300 px-3 py-1 rounded-full border border-slate-700">
+                      Status: {selectedTicket.status}
+                    </span>
+                    {selectedTicket.sama_reference_id && (
+                      <div className="text-xs text-emerald-400 font-mono mt-1">
+                        CRA Ref: {selectedTicket.sama_reference_id}
+                      </div>
+                    )}
+                  </div>
+                  {onDeleteTicket && (
+                    <button
+                      onClick={() => {
+                        if (window.confirm(`Are you sure you want to delete ticket ${selectedTicket.ticket_id}?`)) {
+                          onDeleteTicket(selectedTicket.ticket_id);
+                        }
+                      }}
+                      className="bg-rose-950/60 hover:bg-rose-900/80 text-rose-400 border border-rose-500/30 hover:border-rose-500/60 text-xs font-semibold px-3 py-1.5 rounded-xl transition-all flex items-center space-x-1.5 shadow"
+                      title="Delete Ticket"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Delete</span>
+                    </button>
                   )}
                 </div>
               </div>

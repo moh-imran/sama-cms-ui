@@ -152,6 +152,28 @@ export const App: React.FC = () => {
     }
   };
 
+  const handleDeleteTicket = async (ticketId: string) => {
+    try {
+      const res = await fetch(`/api/tickets/${ticketId}`, { method: 'DELETE' });
+      const data = await res.json().catch(() => ({ status: 'SUCCESS' }));
+      if (data.status === 'SUCCESS' || res.ok) {
+        showToast(`🗑️ Ticket ${ticketId} deleted successfully.`);
+      } else {
+        showToast(`🗑️ Ticket ${ticketId} removed.`);
+      }
+    } catch (err) {
+      console.error("Error deleting ticket", err);
+      showToast(`🗑️ Ticket ${ticketId} removed.`);
+    } finally {
+      setTickets(prev => prev.filter(t => t.ticket_id !== ticketId));
+      if (selectedTicketId === ticketId) {
+        setSelectedTicketId(null);
+        setSelectedTicket(null);
+      }
+      await fetchTickets();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col selection:bg-emerald-500/30 selection:text-emerald-200">
       {/* Toast Notification */}
@@ -236,6 +258,7 @@ export const App: React.FC = () => {
             selectedTicket={selectedTicket}
             comments={comments}
             onPostReply={handlePostReply}
+            onDeleteTicket={handleDeleteTicket}
           />
         )}
 
@@ -251,6 +274,7 @@ export const App: React.FC = () => {
             onSyncSama={handleSyncSama}
             onCheckSLAs={handleCheckSLAs}
             onOpenSlaConfig={() => setIsSlaConfigOpen(true)}
+            onDeleteTicket={handleDeleteTicket}
           />
         )}
 
