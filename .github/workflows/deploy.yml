@@ -23,6 +23,8 @@ jobs:
             echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u "${{ secrets.GHCR_USER }}" --password-stdin
 
             cd /home/deploy/sama-cms
+
+            ls -la
             docker compose pull
             docker compose up -d
 
