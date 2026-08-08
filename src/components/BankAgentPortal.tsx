@@ -86,7 +86,7 @@ export const BankAgentPortal: React.FC<Props> = ({
                 : 'bg-slate-900 text-slate-400 hover:text-white'
             }`}
           >
-            SAMA Escalated ({tickets.filter(t => t.current_level === 'SAMA').length})
+            CRA Escalated ({tickets.filter(t => t.current_level === 'SAMA').length})
           </button>
           <button
             onClick={() => setLevelFilter('All')}
@@ -159,7 +159,7 @@ export const BankAgentPortal: React.FC<Props> = ({
                 {t.is_direct_sama_eligible && (
                   <div className="mt-2 text-[10px] font-bold text-amber-300 bg-amber-500/10 px-2 py-1 rounded border border-amber-500/30 flex items-center space-x-1">
                     <AlertTriangle className="w-3 h-3" />
-                    <span>Rule 5 Direct SAMA Eligible</span>
+                    <span>Rule 5 Direct CRA Eligible</span>
                   </div>
                 )}
               </div>
@@ -204,8 +204,8 @@ export const BankAgentPortal: React.FC<Props> = ({
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
-                    <div><strong className="text-slate-400">SAMA Taxonomy Category:</strong> {selectedTicket.category}</div>
-                    <div><strong className="text-slate-400">Rule 5 Direct SAMA Eligible:</strong> {selectedTicket.is_direct_sama_eligible ? 'Yes (Flagged)' : 'No'}</div>
+                    <div><strong className="text-slate-400">CRA Taxonomy Category:</strong> {selectedTicket.category}</div>
+                    <div><strong className="text-slate-400">Rule 5 Direct CRA Eligible:</strong> {selectedTicket.is_direct_sama_eligible ? 'Yes (Flagged)' : 'No'}</div>
                   </div>
 
                   {/* Active Regulatory Rule Indicator */}
@@ -217,7 +217,7 @@ export const BankAgentPortal: React.FC<Props> = ({
                       selectedTicket.status.includes('Escalated') ? 'bg-amber-500/20 text-amber-300 border-amber-500/30' :
                       'bg-sky-500/20 text-sky-300 border-sky-500/30'
                     }`}>
-                      {selectedTicket.is_direct_sama_eligible ? 'Rule 5: Direct SAMA Pathway' :
+                      {selectedTicket.is_direct_sama_eligible ? 'Rule 5: Direct CRA Pathway' :
                        selectedTicket.is_sla_breached ? (selectedTicket.current_level === 'L1' ? 'Rule 3: L1 SLA Exceeded' : 'Rule 4: L2 SLA Exceeded') :
                        selectedTicket.status === 'Escalated - L2' ? 'Rule 2: Customer Dissatisfaction Signal' :
                        'Rule 1: Standard Intake & L1 Closure'}
@@ -271,7 +271,7 @@ export const BankAgentPortal: React.FC<Props> = ({
                     onClick={() => onSyncSama(selectedTicket.ticket_id)}
                     className="bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 border border-rose-500/40 text-xs font-semibold px-3 py-2 rounded-xl transition-all"
                   >
-                    Escalate & Sync to SAMA Gateway (Mock)
+                    Escalate & Sync to CRA Gateway (Mock)
                   </button>
                 </div>
 

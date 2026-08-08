@@ -41,19 +41,19 @@ export const RulesGuideModal: React.FC<Props> = ({ isOpen, onClose }) => {
       number: 4,
       name: "L2 Unresolved / SLA Breach at Level 2",
       trigger: "L2 timer expires (e.g., >120 hours) or case outside L2 authority",
-      result: "Escalate to SAMA (Central Bank Gateway)",
-      agentBehavior: "Generates executive regulatory handoff summary and submits complaint payload to SAMA platform.",
+      result: "Escalate to CRA (Central Regulatory Authority Gateway)",
+      agentBehavior: "Generates executive regulatory handoff summary and submits complaint payload to CRA platform.",
       color: "border-rose-500/40 bg-rose-950/20 text-rose-300",
-      badge: "Rule 4: L2 SAMA Breach"
+      badge: "Rule 4: L2 CRA Breach"
     },
     {
       number: 5,
-      name: "Direct-to-SAMA Priority Categories",
+      name: "Direct-to-CRA Priority Categories",
       trigger: "Category is pre-flagged as direct escalation eligible (e.g. Fraud, Unauthorized Debit)",
-      result: "Immediate L1 → SAMA path eligible",
-      agentBehavior: "Checks case content against SAMA direct taxonomy during intake; flags case for immediate SAMA pathway.",
+      result: "Immediate L1 → CRA path eligible",
+      agentBehavior: "Checks case content against CRA direct taxonomy during intake; flags case for immediate CRA pathway.",
       color: "border-emerald-500/40 bg-emerald-950/20 text-emerald-300",
-      badge: "Rule 5: Direct SAMA Flag"
+      badge: "Rule 5: Direct CRA Flag"
     }
   ];
 
@@ -66,7 +66,7 @@ export const RulesGuideModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <BookOpen className="w-5 h-5" />
             </div>
             <div>
-              <h3>SAMA Complaint Escalation Rules & Triage Logic</h3>
+              <h3>CRA Complaint Escalation Rules & Triage Logic</h3>
               <p className="text-xs text-slate-400 font-normal">Regulatory Escalation Framework (Rules 1 through 5)</p>
             </div>
           </div>

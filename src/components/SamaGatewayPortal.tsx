@@ -10,8 +10,8 @@ interface Props {
 export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }) => {
   const samaEscalatedTickets = tickets.filter(t => t.current_level === 'SAMA' || t.sama_reference_id);
   const [selectedTicketId, setSelectedTicketId] = useState<string>(samaEscalatedTickets[0]?.ticket_id || '');
-  const [statusUpdate, setStatusUpdate] = useState<'Closed' | 'In Progress at SAMA' | 'Resolved'>('Resolved');
-  const [resolutionNotes, setResolutionNotes] = useState('SAMA Committee resolved case in favor of customer. Bank to refund unauthorized fees within 48h.');
+  const [statusUpdate, setStatusUpdate] = useState<'Closed' | 'In Progress at CRA' | 'Resolved'>('Resolved');
+  const [resolutionNotes, setResolutionNotes] = useState('CRA Committee resolved case in favor of customer. Bank to refund unauthorized fees within 48h.');
 
   const selectedTicket = samaEscalatedTickets.find(t => t.ticket_id === selectedTicketId);
 
@@ -30,7 +30,7 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
             <Building2 className="w-6 h-6" />
           </div>
           <div>
-            <h2 className="text-xl font-bold text-white">Saudi Central Bank (SAMA) Regulator Integration Gateway</h2>
+            <h2 className="text-xl font-bold text-white">Central Regulatory Authority (CRA) Regulator Integration Gateway</h2>
             <p className="text-xs text-slate-300">Simulates regulatory complaint intake, audit snapshots, and asynchronous status webhooks</p>
           </div>
         </div>
@@ -44,11 +44,11 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
         {/* Left Column: SAMA Escalated Complaints List */}
         <div className="lg:col-span-5 space-y-4">
           <div className="glass-panel p-6 rounded-2xl border border-white/10">
-            <h3 className="text-md font-bold text-white mb-3">SAMA Escalated Inbox ({samaEscalatedTickets.length})</h3>
+            <h3 className="text-md font-bold text-white mb-3">CRA Escalated Inbox ({samaEscalatedTickets.length})</h3>
 
             {samaEscalatedTickets.length === 0 ? (
               <div className="p-8 text-center text-slate-400 text-sm">
-                No tickets currently escalated to SAMA. Escalate a ticket from the Bank Agent portal to view it here.
+                No tickets currently escalated to CRA. Escalate a ticket from the Bank Agent portal to view it here.
               </div>
             ) : (
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
@@ -86,7 +86,7 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
               <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
                 <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                   <div>
-                    <span className="text-xs font-mono text-emerald-400">SAMA REF: {selectedTicket.sama_reference_id}</span>
+                    <span className="text-xs font-mono text-emerald-400">CRA REF: {selectedTicket.sama_reference_id}</span>
                     <h3 className="text-lg font-bold text-white">{selectedTicket.subject}</h3>
                   </div>
                   <span className="text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30">
@@ -97,12 +97,12 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
                 <div className="space-y-2">
                   <span className="text-xs font-semibold text-slate-400 flex items-center space-x-1">
                     <Code className="w-3.5 h-3.5" />
-                    <span>SAMA Gateway API Payload Snapshot (REST POST /cases):</span>
+                    <span>CRA Gateway API Payload Snapshot (REST POST /cases):</span>
                   </span>
 
                   <pre className="bg-slate-950 p-4 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 overflow-x-auto">
 {JSON.stringify({
-  sama_reference_id: selectedTicket.sama_reference_id,
+  cra_reference_id: selectedTicket.sama_reference_id,
   bank_code: "SA-BANK-001",
   bank_ticket_id: selectedTicket.ticket_id,
   customer_info: {
@@ -130,7 +130,7 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
               <div className="glass-panel p-6 rounded-2xl border border-emerald-500/30 bg-emerald-950/10 space-y-4">
                 <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
                   <Zap className="w-4 h-4" />
-                  <span>Simulate SAMA Asynchronous Webhook Callback (SAMA → Bank CMS)</span>
+                  <span>Simulate CRA Asynchronous Webhook Callback (CRA → Bank CMS)</span>
                 </div>
 
                 <form onSubmit={handleWebhookSubmit} className="space-y-4">
@@ -143,12 +143,12 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
                     >
                       <option value="Resolved">Resolved (Order Bank Resolution)</option>
                       <option value="Closed">Closed by Regulator</option>
-                      <option value="In Progress at SAMA">In Progress at Regulatory Committee</option>
+                      <option value="In Progress at CRA">In Progress at Regulatory Committee</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-slate-300 mb-1">SAMA Official Resolution Notes</label>
+                    <label className="block text-xs font-semibold text-slate-300 mb-1">CRA Official Resolution Notes</label>
                     <textarea
                       rows={3}
                       value={resolutionNotes}
@@ -170,7 +170,7 @@ export const SamaGatewayPortal: React.FC<Props> = ({ tickets, onTriggerWebhook }
             </div>
           ) : (
             <div className="glass-panel p-16 text-center rounded-2xl border border-white/10 text-slate-400">
-              Select an escalated case from the inbox on the left to inspect SAMA gateway payloads and trigger simulated regulator webhook callbacks.
+              Select an escalated case from the inbox on the left to inspect CRA gateway payloads and trigger simulated regulator webhook callbacks.
             </div>
           )}
         </div>

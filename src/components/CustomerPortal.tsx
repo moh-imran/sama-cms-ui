@@ -168,7 +168,7 @@ export const CustomerPortal: React.FC<Props> = ({
               {lastCreated.ai_insights.is_direct_sama_eligible && (
                 <div className="flex items-center space-x-1.5 text-amber-400 pt-1">
                   <AlertTriangle className="w-4 h-4" />
-                  <span className="font-semibold">Flagged for Direct SAMA Escalation (Rule 5)</span>
+                  <span className="font-semibold">Flagged for Direct CRA Escalation (Rule 5)</span>
                 </div>
               )}
             </div>
@@ -228,7 +228,7 @@ export const CustomerPortal: React.FC<Props> = ({
                   </span>
                   {selectedTicket.sama_reference_id && (
                     <div className="text-xs text-emerald-400 font-mono mt-1">
-                      SAMA Ref: {selectedTicket.sama_reference_id}
+                      CRA Ref: {selectedTicket.sama_reference_id}
                     </div>
                   )}
                 </div>

@@ -111,7 +111,7 @@ export const App: React.FC = () => {
       const res = await fetch(`/api/tickets/${ticketId}/sama-sync`, { method: 'POST' });
       const data = await res.json();
       if (data.status === 'SUCCESS') {
-        showToast(`✅ Synced with SAMA Gateway! Assigned Ref: ${data.sama_result.sama_reference_id}`);
+        showToast(`✅ Synced with CRA Gateway! Assigned Ref: ${data.sama_result.sama_reference_id}`);
         await fetchTickets();
         await fetchTicketDetails(ticketId);
       }
@@ -129,7 +129,7 @@ export const App: React.FC = () => {
       });
       const data = await res.json();
       if (data.status === 'SUCCESS') {
-        showToast(`SAMA Webhook received: Ticket status updated to ${statusUpdate}.`);
+        showToast(`CRA Webhook received: Ticket status updated to ${statusUpdate}.`);
         await fetchTickets();
         await fetchTicketDetails(ticketId);
       }
@@ -171,9 +171,9 @@ export const App: React.FC = () => {
             </div>
             <div>
               <h1 className="text-lg font-extrabold text-white tracking-wide">
-                Saudi Central Bank (SAMA) Complaint Management Platform
+                Central Regulatory Authority (CRA) Complaint Management Platform
               </h1>
-              <p className="text-xs text-slate-400">Powered by Complaint Triage AI Agent & Mock SAMA Adapter</p>
+              <p className="text-xs text-slate-400">Powered by Complaint Triage AI Agent & Mock CRA Adapter</p>
             </div>
           </div>
 
@@ -212,7 +212,7 @@ export const App: React.FC = () => {
               }`}
             >
               <Building2 className="w-4 h-4" />
-              <span>SAMA Regulator Portal</span>
+              <span>CRA Regulator Portal</span>
             </button>
 
             <button
@@ -280,7 +280,7 @@ export const App: React.FC = () => {
 
       {/* Footer */}
       <footer className="border-t border-white/5 py-4 text-center text-xs text-slate-500">
-        Bank CMS & SAMA Integration Framework • AI Agent Compliance Triage Architecture • MVP Mode
+        Bank CMS & CRA Integration Framework • AI Agent Compliance Triage Architecture • MVP Mode
       </footer>
     </div>
   );
