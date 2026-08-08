@@ -1,0 +1,14 @@
+services:
+  sama-cms-ui:
+    image: ghcr.io/${GHCR_OWNER}/sama-cms-ui:latest
+    container_name: sama-cms-ui
+    restart: unless-stopped
+    ports:
+      - "5175:80"
+    networks:
+      - rag-shared-network
+
+networks:
+  rag-shared-network:
+    external: true
+    name: rag-shared-network
